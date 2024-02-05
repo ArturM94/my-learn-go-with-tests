@@ -40,3 +40,26 @@ func assertCounter(t testing.TB, got *Counter, want int) {
 		t.Errorf("got %d want %d", got.Value(), want)
 	}
 }
+
+func BenchmarkCounter(b *testing.B) {
+	counter := NewCounter()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		counter.Inc()
+	}
+}
+
+func BenchmarkConcurrentCounter(b *testing.B) {
+	counter := NewCounter()
+	var wg sync.WaitGroup
+	wg.Add(b.N)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		go func() {
+			counter.Inc()
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+}
