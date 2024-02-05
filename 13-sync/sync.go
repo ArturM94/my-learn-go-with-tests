@@ -1,6 +1,14 @@
 package main
 
-import "sync"
+import (
+	"sync"
+	"sync/atomic"
+)
+
+type Incrementer interface {
+	Inc()
+	Value() int
+}
 
 type Counter struct {
 	mu    sync.Mutex
@@ -19,4 +27,20 @@ func (c *Counter) Inc() {
 
 func (c *Counter) Value() int {
 	return c.value
+}
+
+type AtomicCounter struct {
+	value int32
+}
+
+func NewAtomicCounter() *AtomicCounter {
+	return &AtomicCounter{}
+}
+
+func (c *AtomicCounter) Inc() {
+	atomic.AddInt32(&c.value, 1)
+}
+
+func (c *AtomicCounter) Value() int {
+	return int(atomic.LoadInt32(&c.value))
 }

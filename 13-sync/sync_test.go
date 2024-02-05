@@ -34,7 +34,7 @@ func TestCounter(t *testing.T) {
 	})
 }
 
-func assertCounter(t testing.TB, got *Counter, want int) {
+func assertCounter(t testing.TB, got Incrementer, want int) {
 	t.Helper()
 	if got.Value() != want {
 		t.Errorf("got %d want %d", got.Value(), want)
@@ -51,6 +51,29 @@ func BenchmarkCounter(b *testing.B) {
 
 func BenchmarkConcurrentCounter(b *testing.B) {
 	counter := NewCounter()
+	var wg sync.WaitGroup
+	wg.Add(b.N)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		go func() {
+			counter.Inc()
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+}
+
+func BenchmarkAtomicCounter(b *testing.B) {
+	counter := NewAtomicCounter()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		counter.Inc()
+	}
+}
+
+func BenchmarkConcurrentAtomicCounter(b *testing.B) {
+	counter := NewAtomicCounter()
 	var wg sync.WaitGroup
 	wg.Add(b.N)
 	b.ResetTimer()
