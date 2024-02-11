@@ -1,11 +1,19 @@
 package main
 
-import "strings"
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
 
 type RomanNumeral struct {
 	Value  uint16
 	Symbol string
 }
+
+const maxConvertableArabicNumber uint16 = 3999
+
+var ErrMaxConvertableArabicNumberExceeded = errors.New(fmt.Sprintf("can't convert a number greater than %d", maxConvertableArabicNumber))
 
 var allRomanNumerals = []RomanNumeral{
 	{1000, "M"},
@@ -23,7 +31,10 @@ var allRomanNumerals = []RomanNumeral{
 	{1, "I"},
 }
 
-func ConvertToRoman(arabic uint16) string {
+func ConvertToRoman(arabic uint16) (string, error) {
+	if arabic > maxConvertableArabicNumber {
+		return "", ErrMaxConvertableArabicNumberExceeded
+	}
 	var result strings.Builder
 
 	for _, numeral := range allRomanNumerals {
@@ -33,7 +44,7 @@ func ConvertToRoman(arabic uint16) string {
 		}
 	}
 
-	return result.String()
+	return result.String(), nil
 }
 
 func ConvertToArabic(roman string) uint16 {
