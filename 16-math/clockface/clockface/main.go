@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"io"
-	"learn-go-with-tests/16-math/clockface"
 	"os"
 	"time"
+
+	"learn-go-with-tests/16-math/clockface"
 )
 
 func main() {
