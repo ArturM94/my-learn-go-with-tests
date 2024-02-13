@@ -87,7 +87,6 @@ func TestSVGWriterMinuteHand(t *testing.T) {
 			}
 		})
 	}
-
 }
 
 func TestSVGWriterHourHand(t *testing.T) {
