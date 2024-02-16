@@ -44,6 +44,46 @@ World`,
 	})
 }
 
+func TestFileExtension(t *testing.T) {
+	cases := []struct {
+		Name  string
+		MapFS fstest.MapFS
+	}{
+		{
+			Name: ".txt",
+			MapFS: fstest.MapFS{
+				"hello world.md":   {Data: []byte("hello")},
+				"hello-world2.txt": {Data: []byte("world")},
+			},
+		},
+		{
+			Name: ".doc",
+			MapFS: fstest.MapFS{
+				"hello world.md":   {Data: []byte("hello")},
+				"hello-world2.doc": {Data: []byte("world")},
+			},
+		},
+		{
+			Name: ".wrong",
+			MapFS: fstest.MapFS{
+				"hello world.md":     {Data: []byte("hello")},
+				"hello-world2.wrong": {Data: []byte("world")},
+			},
+		},
+	}
+
+	for _, test := range cases {
+		t.Run(test.Name, func(t *testing.T) {
+			_, err := blogposts.NewPostsFromFS(test.MapFS)
+
+			if err != blogposts.ErrWrongFileExtension {
+				t.Errorf("got %v want %v", err, blogposts.ErrWrongFileExtension)
+			}
+		})
+	}
+
+}
+
 func assertPost(t *testing.T, got blogposts.Post, want blogposts.Post) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
