@@ -76,8 +76,12 @@ func TestFileExtension(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			_, err := blogposts.NewPostsFromFS(test.MapFS)
 
+			if err == nil {
+				t.Fatal("expected an error but didn't get one")
+			}
+
 			if err != blogposts.ErrWrongFileExtension {
-				t.Errorf("got %v want %v", err, blogposts.ErrWrongFileExtension)
+				t.Errorf("got %q want %q", err, blogposts.ErrWrongFileExtension)
 			}
 		})
 	}
