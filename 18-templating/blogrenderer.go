@@ -3,7 +3,6 @@ package blogrenderer
 import (
 	"fmt"
 	"io"
-	"strings"
 )
 
 type Post struct {
@@ -12,13 +11,27 @@ type Post struct {
 }
 
 func Render(w io.Writer, p Post) error {
-	var tags strings.Builder
-	for _, tag := range p.Tags {
-		_, err := tags.WriteString(fmt.Sprintf("<li>%s</li>", tag))
+	_, err := fmt.Fprintf(w, "<h1>%s</h1>\n<p>%s</p>\n", p.Title, p.Description)
+	if err != nil {
 		return err
 	}
-	_, err := fmt.Fprintf(w, `<h1>%s</h1>
-<p>%s</p>
-Tags: <ul>%s</ul>`, p.Title, p.Description, tags.String())
+
+	_, err = fmt.Fprintf(w, "Tags: <ul>")
+	if err != nil {
+		return err
+	}
+
+	for _, tag := range p.Tags {
+		_, err = fmt.Fprintf(w, "<li>%s</li>", tag)
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = fmt.Fprintf(w, "</ul>")
+	if err != nil {
+		return err
+	}
+
 	return err
 }
