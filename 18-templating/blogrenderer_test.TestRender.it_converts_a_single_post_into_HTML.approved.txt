@@ -1,23 +1,23 @@
 
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta name="description" content="Wow, like and subscribe, it really helps the channel guys" lang="en">
-        <title>My amazing blog!</title>
-    </head>
-    <body>
-    <nav role="navigation">
-        <div>
-            <h1>Budding Gopher's blog</h1>
-            <ul>
-                <li><a href="/">home</a></li>
-                <li><a href="about">about</a></li>
-                <li><a href="archive">archive</a></li>
-            </ul>
-        </div>
-    </nav>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Wow, like and subscribe, it really helps the channel guys" lang="en">
+    <title>My amazing blog!</title>
+</head>
+<body>
+<nav role="navigation">
+    <div>
+        <h1>Budding Gopher's blog</h1>
+        <ul>
+            <li><a href="/">home</a></li>
+            <li><a href="about">about</a></li>
+            <li><a href="archive">archive</a></li>
+        </ul>
+    </div>
+</nav>
 
 <h1>hello world</h1>
 
@@ -25,11 +25,11 @@
 
 Tags: <ul><li>go</li><li>tdd</li></ul>
 
-    </main>
-    <footer>
-        <ul>
-            <li><a href="https://github.com/ArturM94">GitHub</a></li>
-        </ul>
-    </footer>
-    </body>
-    </html>
+</main>
+<footer>
+    <ul>
+        <li><a href="https://github.com/ArturM94">GitHub</a></li>
+    </ul>
+</footer>
+</body>
+</html>
