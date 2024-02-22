@@ -8,11 +8,23 @@ import (
 	"testing"
 )
 
+const (
+	body = `# Header
+
+Sample text.
+
+[link](http://example.com)
+
+* first
+* second
+* third`
+)
+
 func TestRender(t *testing.T) {
 	var (
 		aPost = blogrenderer.Post{
 			Title:       "hello world",
-			Body:        "This is a post",
+			Body:        body,
 			Description: "This is a description",
 			Tags:        []string{"go", "tdd"},
 		}
