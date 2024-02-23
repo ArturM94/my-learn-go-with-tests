@@ -47,9 +47,25 @@ func TestStack(t *testing.T) {
 		AssertEqual(t, value, "123")
 		AssertTrue(t, stackOfStrings.IsEmpty())
 	})
+	t.Run("interface stack DX is horrid", func(t *testing.T) {
+		stackOfInts := new(generics.StackOfInts)
+
+		stackOfInts.Push(1)
+		stackOfInts.Push(2)
+		firstNum, _ := stackOfInts.Pop()
+		secondNum, _ := stackOfInts.Pop()
+
+		reallyFirstNum, ok := firstNum.(int)
+		AssertTrue(t, ok)
+
+		reallySecondNum, ok := secondNum.(int)
+		AssertTrue(t, ok)
+
+		AssertEqual(t, reallyFirstNum+reallySecondNum, 3)
+	})
 }
 
-func AssertEqual[T comparable](t *testing.T, got, want T) {
+func AssertEqual(t *testing.T, got, want interface{}) {
 	t.Helper()
 	if got != want {
 		t.Errorf("got %+v, want %+v", got, want)
